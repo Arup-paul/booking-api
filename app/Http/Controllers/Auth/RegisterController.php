@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -15,9 +17,11 @@ class RegisterController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'role_id' => ['required', Rule::in(2, 3)],
+            'password' => ['required', 'string','confirmed'],
+            'role_id' => ['required', Rule::in(Role::ROLE_OWNER, Role::ROLE_USER)],
+
         ]);
+
 
         $user = User::create([
             'name' => $request->name,
