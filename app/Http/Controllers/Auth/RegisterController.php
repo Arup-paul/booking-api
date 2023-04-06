@@ -19,7 +19,6 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string','confirmed'],
             'role_id' => ['required', Rule::in(Role::ROLE_OWNER, Role::ROLE_USER)],
-
         ]);
 
 
