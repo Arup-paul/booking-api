@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\ApartmentFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CountryTableSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(GeoobjectSeeder::class);
+//        $this->call(UserSeeder::class);
+//        $this->call(PropertySeeder::class);
+//        $this->call(ApartmentSeeder::class);
+
     }
 }

@@ -199,7 +199,7 @@ class PropertySearchTest extends TestCase
         ]);
         $response = $this->getJson('/api/search?city=' . $cityId);
         $response->assertStatus(200);
-//        $response->assertJsonPath('0.apartments.0.beds_list', '2 ' . str($bedTypes[0]->name)->plural());
+        $response->assertJsonPath('0.apartments.0.beds_list', '2 ' . str($bedTypes[0]->name)->plural());
 
         // ----------------------
         // FOURTH: add a second room with no beds
@@ -212,7 +212,7 @@ class PropertySearchTest extends TestCase
         ]);
         $response = $this->getJson('/api/search?city=' . $cityId);
         $response->assertStatus(200);
-//        $response->assertJsonPath('0.apartments.0.beds_list', '2 ' . str($bedTypes[0]->name)->plural());
+        $response->assertJsonPath('0.apartments.0.beds_list', '2 ' . str($bedTypes[0]->name)->plural());
 
         // ----------------------
         // FIFTH: add one bed to that second room
@@ -224,7 +224,7 @@ class PropertySearchTest extends TestCase
         ]);
         $response = $this->getJson('/api/search?city=' . $cityId);
         $response->assertStatus(200);
-//        $response->assertJsonPath('0.apartments.0.beds_list', '3 ' . str($bedTypes[0]->name)->plural());
+        $response->assertJsonPath('0.apartments.0.beds_list', '3 ' . str($bedTypes[0]->name)->plural());
 
         // ----------------------
         // SIXTH: add another bed with a different type to that second room
@@ -236,7 +236,7 @@ class PropertySearchTest extends TestCase
         ]);
         $response = $this->getJson('/api/search?city=' . $cityId);
         $response->assertStatus(200);
-//        $response->assertJsonPath('0.apartments.0.beds_list', '4 beds (3 ' . str($bedTypes[0]->name)->plural() . ', 1 ' . $bedTypes[1]->name . ')');
+        $response->assertJsonPath('0.apartments.0.beds_list', '4 beds (3 ' . str($bedTypes[0]->name)->plural() . ', 1 ' . $bedTypes[1]->name . ')');
 
         // ----------------------
         // SEVENTH: add a second bed with that new type to that second room
@@ -248,7 +248,7 @@ class PropertySearchTest extends TestCase
         ]);
         $response = $this->getJson('/api/search?city=' . $cityId);
         $response->assertStatus(200);
-//        $response->assertJsonPath('0.apartments.0.beds_list', '5 beds (3 ' . str($bedTypes[0]->name)->plural() . ', 2 ' . str($bedTypes[1]->name)->plural() . ')');
+        $response->assertJsonPath('0.apartments.0.beds_list', '5 beds (3 ' . str($bedTypes[0]->name)->plural() . ', 2 ' . str($bedTypes[1]->name)->plural() . ')');
     }
 
 

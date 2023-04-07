@@ -19,7 +19,7 @@ class ApartmentSearchResource extends JsonResource
             'name' => $this->name,
             'type' => $this->apartment_type?->name,
             'size' => $this->size,
-            'beds_list' => '', // coming soon
+            'beds_list' => $this->beds_list,
             'bathrooms' => $this->bathrooms,
         ];
     }
