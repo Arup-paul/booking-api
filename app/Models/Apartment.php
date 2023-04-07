@@ -12,10 +12,18 @@ class Apartment extends Model
 
     protected $fillable = [
         'property_id',
+        'apartment_type_id', // [tl! ++]
         'name',
         'capacity_adults',
-        'capacity_children'
+        'capacity_children',
+        'size', // [tl! ++]
+        'bathrooms'
     ];
+
+    public function apartment_type()
+    {
+        return $this->belongsTo(ApartmentType::class);
+    }
 
     public function property()
     {
