@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('beds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('room_id')->constrained();
+            $table->foreignId('bed_type_id')->constrained();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

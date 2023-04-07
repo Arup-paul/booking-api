@@ -11,4 +11,6 @@ class BedType extends Model
 
     protected $fillable = ['name'];
 
+
+
 }
