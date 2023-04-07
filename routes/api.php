@@ -27,5 +27,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('user/bookings',
         [BookingController::class, 'index']);
 });
-
+Route::get('search',
+    \App\Http\Controllers\Public\PropertySearchController::class);
 Route::post('auth/register', App\Http\Controllers\Auth\RegisterController::class);
