@@ -12,7 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('apartment_types', function (Blueprint $table) {
             Schema::create('apartment_types', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
@@ -22,7 +21,7 @@ return new class extends Migration
             ApartmentType::create(['name' => 'Entire apartment']);
             ApartmentType::create(['name' => 'Entire studio']);
             ApartmentType::create(['name' => 'Private suite']);
-        });
+
     }
 
     /**
