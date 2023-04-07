@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Owner\PropertyController;
+use App\Http\Controllers\User\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,11 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
+
+Route::middleware('auth:sanctum')->group(function() {
+    // No owner/user grouping, for now, will do it later with more routes
     Route::get('owner/properties',
-        [\App\Http\Controllers\Owner\PropertyController::class, 'index']);
+        [PropertyController::class, 'index']);
+    Route::post('owner/properties',
+        [PropertyController::class, 'store']);
     Route::get('user/bookings',
-        [\App\Http\Controllers\User\BookingController::class, 'index']);
+        [BookingController::class, 'index']);
 });
 
 Route::post('auth/register', App\Http\Controllers\Auth\RegisterController::class);

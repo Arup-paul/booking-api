@@ -22,6 +22,7 @@ class GateDefineMiddleware
                 $query->where('id', auth()->user()->role_id);
             })->get();
 
+
             foreach ($permissions as $permission) {
                 Gate::define($permission->name, fn() => true);
             }
