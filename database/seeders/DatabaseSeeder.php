@@ -26,5 +26,8 @@ class DatabaseSeeder extends Seeder
 //        $this->call(PropertySeeder::class);
 //        $this->call(ApartmentSeeder::class);
 
+        $this->call(FacilityCategorySeeder::class);
+        $this->call(FacilitySeeder::class);
+
     }
 }
