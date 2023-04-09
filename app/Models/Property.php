@@ -31,6 +31,11 @@ class Property extends Model
         return $this->hasMany(Apartment::class);
     }
 
+    public function facilities()
+    {
+        return $this->belongsToMany(Facility::class);
+    }
+
     public static function booted()
     {
         parent::booted();

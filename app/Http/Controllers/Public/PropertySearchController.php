@@ -49,6 +49,19 @@ class PropertySearchController extends Controller
             })
             ->get();
 
-        return PropertySearchResource::collection($properties);
+
+
+        $allFacilities = $properties->pluck('facilities')->flatten();
+        $facilities = $allFacilities->unique('name')
+            ->mapWithKeys(function ($facility) use ($allFacilities) {
+                return [$facility->name => $allFacilities->where('name', $facility->name)->count()];
+            })
+            ->sortDesc();
+
+        return [
+            'properties' => PropertySearchResource::collection($properties),
+            'facilities' => $facilities,
+        ];
+
     }
 }
