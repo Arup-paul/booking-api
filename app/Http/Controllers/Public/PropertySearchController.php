@@ -13,12 +13,15 @@ class PropertySearchController extends Controller
     public function __invoke(Request $request)
     {
         $properties =  Property::query()
-        ->with([
-            'city',
-            'apartments.apartment_type',
-            'apartments.rooms.beds.bed_type'
-        ])
-            ->when($request->city, function($query) use ($request) {
+              ->with([
+                  'city',
+                  'apartments.apartment_type',
+                  'apartments.rooms.beds.bed_type',
+                  'facilities',
+                  'media' => fn($query) => $query->orderBy('position'),
+              ])
+
+      ->when($request->city, function($query) use ($request) {
                 $query->where('city_id', $request->city);
             })
             ->when($request->country, function($query) use ($request) {
