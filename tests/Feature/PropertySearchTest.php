@@ -251,6 +251,7 @@ class PropertySearchTest extends TestCase
     }
 
 
+
     public function test_property_search_returns_one_best_apartment_per_property()
     {
         $owner = User::factory()->create(['role_id' => Role::ROLE_OWNER]);
@@ -265,6 +266,28 @@ class PropertySearchTest extends TestCase
             'capacity_adults' => 3,
             'capacity_children' => 2,
         ]);
+        $property2 = Property::factory()->create([
+            'owner_id' => $owner->id,
+            'city_id' => $cityId,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Large apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 3,
+            'capacity_children' => 2,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Mid size apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 2,
+            'capacity_children' => 1,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Small apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 1,
+            'capacity_children' => 0,
+        ]);
         $midSizeApartment = Apartment::factory()->create([
             'name' => 'Mid size apartment',
             'property_id' => $property->id,
@@ -278,12 +301,35 @@ class PropertySearchTest extends TestCase
             'capacity_children' => 0,
         ]);
 
+        $property2 = Property::factory()->create([
+            'owner_id' => $owner->id,
+            'city_id' => $cityId,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Large apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 3,
+            'capacity_children' => 2,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Mid size apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 2,
+            'capacity_children' => 1,
+        ]);
+        Apartment::factory()->create([
+            'name' => 'Small apartment 2',
+            'property_id' => $property2->id,
+            'capacity_adults' => 1,
+            'capacity_children' => 0,
+        ]);
+
         $response = $this->getJson('/api/search?city=' . $cityId . '&adults=2&children=1');
 
         $response->assertStatus(200);
+        $response->assertJsonCount(3,'properties');
         $response->assertJsonCount(1, 'properties.0.apartments');
+        $response->assertJsonCount(1, 'properties.1.apartments');
         $response->assertJsonPath('properties.0.apartments.0.name', $midSizeApartment->name);
-
-
     }
 }
