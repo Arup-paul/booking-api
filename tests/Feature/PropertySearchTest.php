@@ -333,6 +333,7 @@ class PropertySearchTest extends TestCase
         $response->assertJsonPath('properties.0.apartments.0.name', $midSizeApartment->name);
     }
 
+
     public function test_property_search_filters_by_price()
     {
         $owner = User::factory()->create(['role_id' => Role::ROLE_OWNER]);
@@ -393,4 +394,6 @@ class PropertySearchTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(0, 'properties');
     }
+
+
 }

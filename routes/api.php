@@ -26,14 +26,21 @@ Route::middleware('auth:sanctum')->group(function() {
 
         Route::post('properties/{property}/photos/{photo}/reorder/{newPosition}',
             [PropertyPhotoController::class, 'reorder']);
+
+
+    });
+
+    Route::prefix('user')->group(function () {
+        Route::resource('bookings', BookingController::class);
     });
 
 
-    Route::get('user/bookings',
-        [BookingController::class, 'index']);
 });
 Route::get('search',PropertySearchController::class);
 Route::get('properties/{property}',PublicPropertyController::class);
 Route::get('apartments/{apartment}',ApartmentController::class);
 
 Route::post('auth/register', RegisterController::class);
+
+
+
