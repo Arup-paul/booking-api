@@ -13,13 +13,20 @@ class PropertySearchController extends Controller
     public function __invoke(Request $request)
     {
         $properties =  Property::query()
-              ->with([
-                  'city',
-                  'apartments.apartment_type',
-                  'apartments.rooms.beds.bed_type',
-                  'facilities',
-                  'media' => fn($query) => $query->orderBy('position'),
-              ])
+            ->with([
+                'city',
+                'apartments.apartment_type',
+                'apartments.rooms.beds.bed_type',
+                'apartments.prices' => function($query) use ($request) {
+                    $query->validForRange([
+                        $request->start_date ?? now()->addDay()->toDateString(),
+                        $request->end_date ?? now()->addDays(2)->toDateString(),
+                    ]);
+                },
+                'facilities',
+                'media' => fn($query) => $query->orderBy('position'),
+            ])
+
 
       ->when($request->city, function($query) use ($request) {
                 $query->where('city_id', $request->city);
@@ -40,6 +47,16 @@ class PropertySearchController extends Controller
                     )";
                     $query->whereRaw($condition);
                 }
+            })
+            ->when($request->price_from, function($query) use ($request) {
+                $query->whereHas('apartments.prices', function($query) use ($request) {
+                    $query->where('price', '>=', $request->price_from);
+                });
+            })
+            ->when($request->price_to, function($query) use ($request) {
+                $query->whereHas('apartments.prices', function($query) use ($request) {
+                    $query->where('price', '<=', $request->price_to);
+                });
             })
             ->when($request->adults && $request->children, function($query) use ($request) {
                 $query->withWhereHas('apartments', function($query) use ($request) {
