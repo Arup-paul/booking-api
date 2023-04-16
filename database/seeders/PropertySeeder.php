@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Property;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,9 +14,16 @@ class PropertySeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(int $count = 100): void
     {
+        $users = User::where('role_id', Role::ROLE_OWNER)->pluck('id');
+        $cities = City::pluck('id');
 
-        Property::factory()->count(10)->create();
+        for ($i = 1; $i <= $count; $i++) {
+            Property::factory()->create([
+                'owner_id' => $users->random(),
+                'city_id' => $cities->random(),
+            ]);
+        }
     }
 }
